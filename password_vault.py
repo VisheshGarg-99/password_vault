@@ -15,25 +15,93 @@ def decode(allpassword):
 		allpassword = allpassword.replace(a,b)
 	return allpassword
 
-i = input('enter "1" to view or "2" to add : \n')
-if i=="1":
+def read(i):
 	with open('pass.txt') as f:
-		allpassword = f.read()
-		allpassword = decode(allpassword)
-	print(allpassword)
+		allpassword = f.readlines()
+		v=1
+		for pas in allpassword:
+			pas = decode(pas)
+			print(f'{v}.) {pas}',end='')
+			v+=1
+		return allpassword
+	
 
-elif i == "2":
+def append(i):
 	newpass = input('enter new password : ')
 	new = newpass
 	newpass = encode(newpass)
 	n=newpass
-	with open ('pass.txt','a') as f:
+	with open('pass.txt','a') as f:
 		p = f.write('\n')
 		newpass = f.write(str(newpass))	
 	print(f'Your password {new} is successfully added as {n}')
-	
+
+
+def write(r):
+	with open('pass.txt','w') as f:
+		for i in r:
+			f.write(str(i))
+	read(i)
+
+def delete(i):
+	r = read(i)
+	total_pass = len(r)
+	del_pass = int(input('\n\nenter the password you want to edit : '))
+	del_pass = del_pass-1
+	if del_pass <= total_pass:
+		r[del_pass] = decode(r[del_pass])
+		confirm = input(f'are you sure you want to delete {r[del_pass]} "Y" or "N" : ')
+		if confirm == "y":
+			delete = r.pop(del_pass)
+			print(f'{delete}is deleted successfully...')
+			write(r)
+		elif confirm == "n":
+			read(i)
+		else:
+			print('invalid input... please try again!')
+			
+
+def edit(i):
+	r = read(i)
+	total_pass = len(r)
+	edit_pass = int(input('\n\nenter the password you want to edit : '))
+	edit_pass = edit_pass-1
+	if edit_pass <= total_pass:
+		r[edit_pass] = decode(r[edit_pass])
+		confirm = input(f'are you sure you want to edit {r[edit_pass]} "Y" or "N" : ')
+		if confirm == "y":
+			final = input('enter the new password : \n')
+			final = encode(final)
+			r[edit_pass] = final + '\n'
+			write(r)
+		elif confirm == "n":
+			read(i)
+		else:
+			print('invalid input... please try again!')
+
+
+	elif edit_pass<0 or edit_pass>total_pass:
+		print('invalid input... please try again!')
+
+
+
+i = input('enter "1" to view, "2" to add, "3" to edit or "4" to delete : \n')
+if i == "1":
+	read(i)
+
+elif i == "2":
+	append(i)
+
+elif i == "3":
+	edit(i)
+
+elif i == "4":
+	delete(i)
+
 else:
 	print('invalid input... please try again!')
 
-		
 
+
+
+		
