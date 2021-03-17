@@ -16,7 +16,7 @@ def decode(allpassword):
 	return allpassword
 
 def read(i):
-	with open('pass.txt') as f:
+	with open(r'C:\\Users\\HP\\Desktop\\Untitled Export\\pass.txt') as f:
 		allpassword = f.readlines()
 		v=1
 		for pas in allpassword:
@@ -31,14 +31,14 @@ def append(i):
 	new = newpass
 	newpass = encode(newpass)
 	n=newpass
-	with open('pass.txt','a') as f:
+	with open(r'C:\\Users\\HP\\Desktop\\Untitled Export\\pass.txt','a') as f:
 		p = f.write('\n')
 		newpass = f.write(str(newpass))	
 	print(f'Your password {new} is successfully added as {n}')
 
 
 def write(r):
-	with open('pass.txt','w') as f:
+	with open(r'C:\\Users\\HP\\Desktop\\Untitled Export\\pass.txt','w') as f:
 		for i in r:
 			f.write(str(i))
 	read(i)
@@ -46,9 +46,9 @@ def write(r):
 def delete(i):
 	r = read(i)
 	total_pass = len(r)
-	del_pass = int(input('\n\nenter the password you want to edit : '))
+	del_pass = int(input('\nenter the password you want to delete : '))
 	del_pass = del_pass-1
-	if del_pass <= total_pass:
+	if del_pass <= total_pass and del_pass>0:
 		r[del_pass] = decode(r[del_pass])
 		confirm = input(f'are you sure you want to delete {r[del_pass]} "Y" or "N" : ')
 		if confirm == "y":
@@ -60,13 +60,15 @@ def delete(i):
 		else:
 			print('invalid input... please try again!')
 			
+	else:
+		print('invalid input... please try again!')
 
 def edit(i):
 	r = read(i)
 	total_pass = len(r)
 	edit_pass = int(input('\n\nenter the password you want to edit : '))
 	edit_pass = edit_pass-1
-	if edit_pass <= total_pass:
+	if edit_pass>0 and edit_pass <= total_pass:
 		r[edit_pass] = decode(r[edit_pass])
 		confirm = input(f'are you sure you want to edit {r[edit_pass]} "Y" or "N" : ')
 		if confirm == "y":
@@ -80,7 +82,7 @@ def edit(i):
 			print('invalid input... please try again!')
 
 
-	elif edit_pass<0 or edit_pass>total_pass:
+	else:
 		print('invalid input... please try again!')
 
 
@@ -100,8 +102,3 @@ elif i == "4":
 
 else:
 	print('invalid input... please try again!')
-
-
-
-
-		
